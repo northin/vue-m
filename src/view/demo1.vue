@@ -1,7 +1,7 @@
 <template>
   <div class="demo1">
     <div class="d-content">
-      <h2 class="d-title">demo1</h2>
+      <h2 class="d-title">歌曲排名分析</h2>
       <el-tabs v-model="activeName" @tab-click="handleClick" class="d-tabs">
         <el-tab-pane label="用户管理" name="first"></el-tab-pane>
         <!-- <el-tab-pane label="配置管理" name="second">配置管理</el-tab-pane>
@@ -22,61 +22,62 @@
             下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
 
       <el-row class="d-choice">
-        <el-col :span="4" class="d-choice-li active">
-          <div class="d-choice-title">浏览次数（PV）</div>
-          <div class="d-choice-num">10.53万</div>
-          <div class="d-choice-pre">同比: <i>-51.41%</i></div>
+        <el-col :span="4" class="d-choice-li" @click.native="cat(0)" :class="(catId == '0'?'active':'')">
+          <div class="d-choice-title">总排名（top10）</div>
+          <div class="d-choice-num">共2468736首</div>
+          <div class="d-choice-pre">占比: <i>100%</i></div>
         </el-col>
-        <el-col :span="4" class="d-choice-li">
-          <div class="d-choice-title">浏览次数（PV）</div>
-          <div class="d-choice-num">10.53万</div>
-          <div class="d-choice-pre">同比: <i>-51.41%</i></div>
+        <el-col :span="4" class="d-choice-li" @click.native="cat(1)" :class="(catId == '1'?'active':'')">
+          <div class="d-choice-title">华语排名（top10）</div>
+          <div class="d-choice-num">共355802首</div>
+          <div class="d-choice-pre">占比: <i>14.41%</i></div>
         </el-col>
-        <el-col :span="4" class="d-choice-li">
-          <div class="d-choice-title">浏览次数（PV）</div>
-          <div class="d-choice-num">10.53万</div>
-          <div class="d-choice-pre">同比: <i>-51.41%</i></div>
+        <el-col :span="4" class="d-choice-li" @click.native="cat(2)" :class="(catId == '2'?'active':'')">
+          <div class="d-choice-title">欧美排名（top10）</div>
+          <div class="d-choice-num">共1213450首</div>
+          <div class="d-choice-pre">占比: <i>49.15%</i></div>
         </el-col>
-        <el-col :span="4" class="d-choice-li">
-          <div class="d-choice-title">浏览次数（PV）</div>
-          <div class="d-choice-num">10.53万</div>
-          <div class="d-choice-pre">同比: <i>-51.41%</i></div>
+        <el-col :span="4" class="d-choice-li" @click.native="cat(3)" :class="(catId == '3'?'active':'')">
+          <div class="d-choice-title">日本排名（top10）</div>
+          <div class="d-choice-num">共676557首</div>
+          <div class="d-choice-pre">占比: <i>27.40%</i></div>
         </el-col>
-        <el-col :span="4" class="d-choice-li">
-          <div class="d-choice-title">浏览次数（PV）</div>
-          <div class="d-choice-num">10.53万</div>
-          <div class="d-choice-pre">同比: <i>-51.41%</i></div>
+        <el-col :span="4" class="d-choice-li" @click.native="cat(4)" :class="(catId == '4'?'active':'')">
+          <div class="d-choice-title">韩国排名（top10）</div>
+          <div class="d-choice-num">共147893首</div>
+          <div class="d-choice-pre">占比: <i>5.99%</i></div>
         </el-col>
-        <el-col :span="4" class="d-choice-li">
-          <div class="d-choice-title">浏览次数（PV）</div>
-          <div class="d-choice-num">10.53万</div>
-          <div class="d-choice-pre">同比: <i>-51.41%</i></div>
+        <el-col :span="4" class="d-choice-li" @click.native="cat(5)" :class="(catId == '5'?'active':'')">
+          <div class="d-choice-title">其他排名（top10）</div>
+          <div class="d-choice-num">共73567首</div>
+          <div class="d-choice-pre">占比: <i>2.98%</i></div>
         </el-col>
       </el-row>
 
       <div class="d-choice-table">
         <span class="d-choice-table-title">
           <i class="el-icon-message"></i>
-          显示2017年10月26日-2017年10月26日的汇总数据，独立访客(UV)51,161，同比下降-48.75%。
+          爬取2018年1月18日（包括等你下课）的网易云音乐的汇总数据。
         </span>
 
         <el-dropdown class="d-choice-tool">
           <el-button type="primary">
-            <i class="el-icon-setting"></i>分析工具
+            <i class="el-icon-setting"></i>
+            分析工具
           </el-button>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item>双皮奶</el-dropdown-item>
-            <el-dropdown-item>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
+            <el-dropdown-item></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
 
@@ -115,19 +116,20 @@ export default {
   data () {
     return {
       charts: '',
+      catId:0,
       highTemData: [11, 11, 15, 13, 12, 13, 10],
       lowTemData: [1, -2, 2, 5, 3, 2, 0],
       activeName: 'first',
       tableChart: {
           title : {
-              text: '某地区蒸发量和降水量',
-              subtext: '纯属虚构'
+              text: '',
+              // subtext: '纯属虚构'
           },
           tooltip : {
               trigger: 'axis'
           },
           legend: {
-              data:['蒸发量','降水量']
+              data:['评论数']
           },
           toolbox: {
               show : true,
@@ -140,10 +142,17 @@ export default {
               }
           },
           calculable : true,
+          grid:{
+            y2:140
+          },
           xAxis : [
               {
                   type : 'category',
-                  data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                  data : [],
+                  axisLabel:{
+                    interval:0,
+                    rotate:-30
+                  }
               }
           ],
           yAxis : [
@@ -153,29 +162,12 @@ export default {
           ],
           series : [
               {
-                  name:'蒸发量',
+                  name:'评论数',
                   type:'bar',
-                  data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                  data:[],
                   markPoint : {
                       data : [
-                          {type : 'max', name: '最大值'},
-                          {type : 'min', name: '最小值'}
-                      ]
-                  },
-                  markLine : {
-                      data : [
-                          {type : 'average', name: '平均值'}
-                      ]
-                  }
-              },
-              {
-                  name:'降水量',
-                  type:'bar',
-                  data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
-                  markPoint : {
-                      data : [
-                          {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
-                          {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                          {name : '最多', value : '', xAxis: 0, yAxis: '', symbolSize:''}
                       ]
                   },
                   markLine : {
@@ -188,7 +180,7 @@ export default {
       },
       lineChart : {
         title : {
-           text: '未来一周气温变化',
+           text: '总排名（top10）',
            // subtext: '纯属虚构'
        },
        tooltip : {
@@ -283,6 +275,12 @@ export default {
     }
   },
   methods: {
+    cat(id){
+      this.catId = id;
+    },
+    handleClick(){
+
+    },
     drawPie(id){
        this.charts = echarts.init(document.getElementById(id))
        this.charts.setOption(this.lineChart)
@@ -293,12 +291,75 @@ export default {
     }
 
   },
+  created(){
+    var self = this
+    this.$store.dispatch("getTop10",{catId:this.catId}).then((res) => {
+      // const topData = self.$store.state.topData
+      const topData = res
+      const xData = []
+      const yData = []
+      for (var i = 0; i < topData.length; i++) {
+        xData.push(topData[i]["歌曲名字"])
+        yData.push(topData[i]["评论数"])
+      }
+      self.tableChart.title.text = "总排名（top10）"
+      self.tableChart.xAxis[0].data = xData
+      self.tableChart.series[0].data = yData
+      self.tableChart.series[0].markPoint.data[0].value = topData[0]["评论数"]
+      self.tableChart.series[0].markPoint.data[0].yAxis = topData[0]["评论数"]
+      self.tableChart.series[0].markPoint.data[0].symbolSize = topData[0]["评论数"]
+      self.drawTable('main');
+    })
+
+  },
+  watch:{
+    catId:function(newQuestion,oldQuestion){
+      let self = this;
+      switch (newQuestion) {
+        case 0:
+          self.tableChart.title.text = "总排名（top10）"
+          break;
+        case 1:
+          self.tableChart.title.text = "华语排名（top10）"
+          break;
+        case 2:
+          self.tableChart.title.text = "欧美排名（top10）"
+          break;
+        case 3:
+          self.tableChart.title.text = "日本排名（top10）"
+          break;
+        case 4:
+          self.tableChart.title.text = "韩国排名（top10）"
+          break;
+        case 5:
+          self.tableChart.title.text = "其他排名（top10）"
+          break;
+      }
+
+      self.$store.dispatch("getTop10",{catId:newQuestion}).then((res) => {
+        // const topData = self.$store.state.topData
+        const topData = res
+        const xData = []
+        const yData = []
+        for (var i = 0; i < topData.length; i++) {
+          xData.push(topData[i]["歌曲名字"])
+          yData.push(topData[i]["评论数"])
+        }
+        self.tableChart.xAxis[0].data = xData
+        self.tableChart.series[0].data = yData
+        self.tableChart.series[0].markPoint.data[0].value = topData[0]["评论数"]
+        self.tableChart.series[0].markPoint.data[0].yAxis = topData[0]["评论数"]
+        // self.tableChart.series[0].markPoint.data[0].symbolSize = topData[0]["评论数"]
+        self.drawTable('main');
+      })
+    }
+  },
   mounted() {
     this.$nextTick(function() {
-        this.drawPie('main');
-        this.drawTable('main1');
+
+        this.drawPie('main1');
         this.drawPie('main2')
-        this.drawTable('main4');
+        this.drawPie('main4');
         this.drawPie('main3')
     })
   },
@@ -346,6 +407,7 @@ export default {
   background-color: #F7FCFF;
   border-top: 2px solid #2196F3;
   border-right: 1px solid #ccc;
+  border-left: 1px solid #ccc;
   border-bottom: 0;
 }
 .d-choice .active .d-choice-title{
@@ -374,7 +436,7 @@ export default {
 }
 
 .d-choice-table{
-  height: 482px;
+  height: 682px;
   background-color: #fff;
   text-align: left;
 }
@@ -390,7 +452,7 @@ export default {
   margin-right: 30px;
 }
 .d-choice-pic{
-  height: 400px;
+  height: 600px;
 }
 .d-tables{
   display: flex;

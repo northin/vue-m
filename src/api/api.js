@@ -69,25 +69,14 @@ instance.interceptors.response.use(
 //   }
 // )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 export default {
   userLogin(data){
     return instance.post('http://localhost:3000/api/user/signIn.json',data);
   },
   userGetAll(){
     return instance.get('http://localhost:3000/api/user/getLoginUserInfo.json');
+  },
+  getTop10(data){
+    return instance.post('http://localhost:3000/api/project/top10.json',data);
   }
 }
