@@ -6,7 +6,12 @@
         <sideMenu></sideMenu>
       </el-col>
       <el-col :span="21" class="content">
-        <demo1></demo1>
+        <template v-if="(routerId =='2'?true:false)">
+          <commentsAnalysis></commentsAnalysis>
+        </template>
+        <template v-else>
+          <demo1></demo1>
+        </template>
       </el-col>
     </el-row>
 
@@ -19,17 +24,32 @@
 import Header from '@/components/header/HeaderBody.vue'
 import sideMenu from '@/components/sideMenu.vue'
 import demo1 from '@/view/demo1.vue'
+import commentsAnalysis from '@/view/commentsAnalysis.vue'
 export default {
   name: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      routerId:''
     }
+  },
+  created(){
+    // console.log(this.$router.history.current.params.routerId)
+    this.routerId = this.$route.params.routerId
+    // console.log(this.routerId)
+  },
+  watch: {
+    '$route' (to, from) {
+      // 对路由变化作出响应...
+      this.routerId = to.params.routerId
+    }
+
   },
   components: {
     Header,
     sideMenu,
-    demo1
+    demo1,
+    commentsAnalysis
   }
 }
 </script>

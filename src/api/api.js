@@ -78,5 +78,8 @@ export default {
   },
   getTop10(data){
     return instance.post('http://localhost:3000/api/project/top10.json',data);
+  },
+  getTime(data){
+    return instance.post('http://localhost:3000/api/project/time.json',data);
   }
 }

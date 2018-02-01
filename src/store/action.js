@@ -19,6 +19,12 @@ const actions = {
       }
       return topData
     })
+  },
+  getTime(store,data){
+    return api.getTime(data).then(res=>{
+
+      return res.data.data
+    })
   }
 }
 export default actions

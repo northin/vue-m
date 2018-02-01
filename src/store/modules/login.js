@@ -14,7 +14,7 @@ const actions = {
         Message('恭喜你，登录成功!');
         // store.state.token = res.data.token;
         store.commit(types.LOGIN, res.data.token);
-        window.location.href = '/#/project';
+        window.location.href = '/#/project/1';
       }else{
         // console.log("false")
         Message({
