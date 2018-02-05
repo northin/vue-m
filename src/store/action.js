@@ -25,6 +25,17 @@ const actions = {
 
       return res.data.data
     })
+  },
+  getJson(store,data){
+    return api.getJson(data).then(res=>{
+      // console.log(res.data)
+      if(res.data.data == undefined){
+        return res
+      }else{
+        return res.data.data
+      }
+
+    })
   }
 }
 export default actions

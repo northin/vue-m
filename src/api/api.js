@@ -81,5 +81,8 @@ export default {
   },
   getTime(data){
     return instance.post('http://localhost:3000/api/project/time.json',data);
+  },
+  getJson(data){
+    return instance.post('http://localhost:3000/api/project/getJson.json',data);
   }
 }

@@ -90,16 +90,16 @@
         业务报表
       </div>
       <div class="d-tables">
-        <div style="width:560px;height:399px;background-color:#fff;margin-right:18px;margin-bottom:18px;">
-          <div class="d-table" id="main1" style="width:560px;height:399px;"></div>
+        <div style="width:100%;height:600px;background-color:#fff;margin-right:18px;margin-bottom:18px;">
+          <div class="d-table" id="main1" style="width:100%;height:500px;"></div>
         </div>
-        <div style="width:560px;height:399px;background-color:#fff;">
-          <div class="d-table" id="main2" style="width:560px;height:399px;"></div>
+        <div style="width:100%;height:600px;background-color:#fff;">
+          <div class="d-table" id="main2" style="width:100%;height:600px;"></div>
         </div>
-        <div style="width:560px;height:399px;background-color:#fff;margin-right:18px">
+        <div style="width:560px;height:450px;background-color:#fff;margin-right:18px">
           <div class="d-table" id="main3" style="width:560px;height:399px;"></div>
         </div>
-        <div style="width:560px;height:399px;background-color:#fff">
+        <div style="width:560px;height:450px;background-color:#fff">
           <div class="d-table" id="main4" style="width:560px;height:399px;"></div>
         </div>
       </div>
@@ -110,6 +110,7 @@
 
 <script>
 import echarts from 'echarts';
+import wordCloud from 'echarts-wordcloud';
 import dTable from '@/components/d-table.vue'
 export default {
   name: 'demo1',
@@ -123,7 +124,7 @@ export default {
       tableChart: {
           title : {
               text: '',
-              // subtext: '纯属虚构'
+              subtext: '数据来自网易云音乐'
           },
           tooltip : {
               trigger: 'axis'
@@ -180,73 +181,70 @@ export default {
       },
       lineChart : {
         title : {
-           text: '总排名（top10）',
-           // subtext: '纯属虚构'
+           text: '',
+           subtext: '数据来自网易云音乐'
        },
-       tooltip : {
-           trigger: 'axis'
-       },
-       legend: {
-           data:['最高气温','最低气温']
-       },
-       toolbox: {
-           show : true,
-           feature : {
-               mark : {show: true},
-               dataView : {show: true, readOnly: false},
-               magicType : {show: true, type: ['line', 'bar']},
-               restore : {show: true},
-               saveAsImage : {show: true}
-           }
-       },
-       calculable : true,
-       xAxis : [
-           {
-               type : 'category',
-               boundaryGap : false,
-               data : ['周一','周二','周三','周四','周五','周六','周日']
-           }
-       ],
-       yAxis : [
-           {
-               type : 'value',
-               axisLabel : {
-                   formatter: '{value} °C'
-               }
-           }
-       ],
         series: [
             {
-             name:'最高气温',
-             type:'line',
-             data:[11, 11, 15, 13, 12, 13, 10],
-             markPoint : {
-                 data : [
-                     {type : 'max', name: '最大值'},
-                     {type : 'min', name: '最小值'}
-                 ]
-             },
-             markLine : {
-                 data : [
-                     {type : 'average', name: '平均值'}
-                 ]
-             }
-         },
-         {
-             name:'最低气温',
-             type:'line',
-             data:[1, -2, 2, 5, 3, 2, 0],
-             markPoint : {
-                 data : [
-                     {name : '周最低', value : -2, xAxis: 1, yAxis: -1.5}
-                 ]
-             },
-             markLine : {
-                 data : [
-                     {type : 'average', name : '平均值'}
-                 ]
-             }
-         }
+              type: 'wordCloud',
+        gridSize: 2,
+        sizeRange: [12, 50],
+        rotationRange: [-90, 90],
+        shape: 'circle',
+        textStyle: {
+            normal: {
+                color: function () {
+                    return 'rgb(' + [
+                            Math.round(Math.random() * 255),
+                            Math.round(Math.random() * 255),
+                            Math.round(Math.random() * 255)
+                        ].join(',') + ')';
+                }
+            },
+            emphasis: {
+                shadowBlur: 10,
+                shadowColor: '#333'
+            }
+        },
+        data:[]
+            }
+
+        ]
+      },
+      tableChart1: {
+        title: {
+            text: '',
+            subtext: '数据来自网易云音乐'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['在歌单中出现次数']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            data: []
+        },
+        series: [
+            {
+                name: '在歌单中出现次数',
+                type: 'bar',
+                data: []
+            }
         ]
       },
       pickerOptions1: {
@@ -288,6 +286,11 @@ export default {
     drawTable(id){
       this.charts = echarts.init(document.getElementById(id))
       this.charts.setOption(this.tableChart)
+    },
+
+    drawTable1(id){
+      this.charts = echarts.init(document.getElementById(id))
+      this.charts.setOption(this.tableChart1)
     }
 
   },
@@ -310,7 +313,38 @@ export default {
       self.tableChart.series[0].markPoint.data[0].symbolSize = topData[0]["评论数"]
       self.drawTable('main');
     })
+    this.$store.dispatch("getJson",{jsonName:'data1w'}).then((res) =>{
+      self.lineChart.title.text = '1w评论热评词云'
+      self.lineChart.series[0].data = res;
+      self.drawPie('main1');
+    })
+    this.$store.dispatch("getJson",{jsonName:'dataLyric'}).then((res) =>{
+      self.lineChart.title.text = '古风歌词词云'
+      self.lineChart.series[0].data = res;
+      self.drawPie('main2');
+    })
 
+    this.$store.dispatch("getJson",{jsonName:'gftop'}).then((res) =>{
+      self.tableChart1.title.text = '古风歌曲歌单出现次数统计'
+      let xData = []
+      let yData = []
+      const topData = []
+      let keyList = []
+      keyList = Object.keys(res.data)
+      for (var item in keyList) {
+        if (keyList.hasOwnProperty(item)) {
+          topData.push(res.data[keyList[item]]);
+        }
+      }
+      console.log(topData)
+      for (var i = 0; i < topData.length; i++) {
+        xData.push(topData[i]["歌曲数量"])
+        yData.push(topData[i]["歌名"])
+      }
+      self.tableChart1.yAxis.data = yData;
+      self.tableChart1.series[0].data = xData;
+      self.drawTable1('main3');
+    })
   },
   watch:{
     catId:function(newQuestion,oldQuestion){
@@ -357,10 +391,10 @@ export default {
   mounted() {
     this.$nextTick(function() {
 
-        this.drawPie('main1');
-        this.drawPie('main2')
-        this.drawPie('main4');
-        this.drawPie('main3')
+        //
+
+        // this.drawPie('main4');
+        // this.drawPie('main3')
     })
   },
   components:{
